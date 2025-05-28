@@ -1,0 +1,13 @@
+{
+    "mcpServers": {
+        "weather-mcp-server": {
+            "command": "uv",
+            "args": [
+                "run",
+                "--active",
+                "D:\\306Datawhale\\MCPDemo\\weather\\weather.py"
+            ],
+            "enabled": true
+        }
+    }
+}
