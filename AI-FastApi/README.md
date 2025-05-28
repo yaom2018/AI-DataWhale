@@ -112,10 +112,72 @@ async def read_items(q: str = Query(default=..., min_length=3)):
     @app.post("/items/")
     async def read_item(item: Item = Body(embed=True)):
 
+## 第06课-额外参数信息
+使用 Pydantic 的 Field 在 Pydantic 模型内部声明校验和元数据
+就是对定义的输入每一个字段的校验和元数据信息的描述。
+```python
+class Item(BaseModel):
+    name: str
+    description: str | None = Field(
+        default=None, title="The description of the item", max_length=300
+    )
+    price: float = Field(gt=0, description="The price must be greater than zero")
+    tax: float | None = None
+
+@app.post("/items/{item_id}")
+async def update_item(item_id: int, item: Annotated[Item, Body(embed=True)]):
+```
+
+模式-例子
+```python
+class Item(BaseModel):
+    name: str
+    description: str | None = Field(
+        default=None, title="The description of the item", max_length=300
+    )
+    price: float = Field(gt=0, description="The price must be greater than zero")
+    tax: float | None = None
+    model_config = {
+        "json_schema_extra": {
+            "examples": [
+                {
+                    "name": "Foo",
+                    "description": "A very nice Item",
+                    "price": 35.4,
+                    "tax": 3.2,
+                }
+            ]
+        }
+    }
+```
+
+Field 的附加参数
+```python
+class Item(BaseModel):
+    name: str = Field(examples=["Foo"])
+    description: str | None = Field(default=None, examples=["A very nice Item"])
+    price: float = Field(examples=[35.4])
+    tax: float | None = Field(default=None, examples=[3.2])
+```
+
+Body 额外参数
+```python
+body_examples = {
+    "name": "细胞生物学",
+    "description": "考研书籍",
+    "price": 35.8,
+    "tax": 0.6,
+}
 
 
+@app.post("/items/{item_id}")
+async def update_item(item_id: int, item: Annotated[Item, Body(embed=True,example=body_examples)]):
+```
 
+额外数据类型
+```python
 
+```
 
 
 
