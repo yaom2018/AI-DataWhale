@@ -179,6 +179,24 @@ async def update_item(item_id: int, item: Annotated[Item, Body(embed=True,exampl
 
 ```
 
+## 第07课-嵌套模型
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
