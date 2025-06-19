@@ -1,0 +1,16 @@
+# Windows 系统（使用正斜杠）
+scp D:/306Datawhale/AI-SH/docker_install_redis.sh atlas@192.168.124.17:/home/atlas/Downloads
+
+# 若文件名包含特殊字符（如空格），需用引号包裹
+scp "D:/路径/包含空格的文件.sh" atlas@服务器IP:远程路径
+
+
+
+sudo mkdir -p /etc/docker
+sudo tee /etc/docker/daemon.json <<-'EOF'
+{
+  "registry-mirrors": ["https://registry.docker-cn.com"]
+}
+EOF
+sudo systemctl daemon-reload
+sudo systemctl restart docker
